@@ -1,9 +1,6 @@
 package GUI.Dialog;
 
 import BUS.ChiTietSanPhamBUS;
-import BUS.DungLuongRamBUS;
-import BUS.DungLuongRomBUS;
-import BUS.MauSacBUS;
 import BUS.PhienBanSanPhamBUS;
 import DTO.ChiTietSanPhamDTO;
 import DTO.PhienBanSanPhamDTO;
@@ -53,9 +50,9 @@ public class ChiTietSanPhamDialog extends JDialog implements KeyListener, ItemLi
     ArrayList<ChiTietSanPhamDTO> listctsp = new ArrayList<>();
     ArrayList<PhienBanSanPhamDTO> ch = new ArrayList<>();
     PhienBanSanPhamBUS phienbanBus = new PhienBanSanPhamBUS();
-    DungLuongRamBUS ramBus = new DungLuongRamBUS();
-    DungLuongRomBUS romBus = new DungLuongRomBUS();
-    MauSacBUS mausacBus = new MauSacBUS();
+//    DungLuongRamBUS ramBus = new DungLuongRamBUS();
+//    DungLuongRomBUS romBus = new DungLuongRomBUS();
+//    MauSacBUS mausacBus = new MauSacBUS();
 
     SanPhamDTO spdto;
 
@@ -146,8 +143,8 @@ public class ChiTietSanPhamDialog extends JDialog implements KeyListener, ItemLi
         int size = ch.size();
         String[] arr = new String[size];
         for (int i = 0; i < size; i++) {
-            arr[i] = romBus.getKichThuocById(ch.get(i).getRom()) + "GB - "
-                    + ramBus.getKichThuocById(ch.get(i).getRam()) + "GB - " + mausacBus.getTenMau(ch.get(i).getMausac());
+//            arr[i] = romBus.getKichThuocById(ch.get(i).getRom()) + "GB - "
+//                    + ramBus.getKichThuocById(ch.get(i).getRam()) + "GB - " + mausacBus.getTenMau(ch.get(i).getMausac());
         }
         return arr;
     }

@@ -1,8 +1,5 @@
 package helper;
 
-import BUS.DungLuongRamBUS;
-import BUS.DungLuongRomBUS;
-import BUS.MauSacBUS;
 import DAO.ChiTietPhieuNhapDAO;
 import DAO.ChiTietPhieuXuatDAO;
 import DAO.KhachHangDAO;
@@ -58,9 +55,9 @@ public class writePDF {
     Font fontBold25;
     Font fontBoldItalic15;
 
-    DungLuongRomBUS romBus = new DungLuongRomBUS();
-    DungLuongRamBUS ramBus = new DungLuongRamBUS();
-    MauSacBUS mausacBus = new MauSacBUS();
+//    DungLuongRomBUS romBus = new DungLuongRomBUS();
+//    DungLuongRamBUS ramBus = new DungLuongRamBUS();
+//    MauSacBUS mausacBus = new MauSacBUS();
 
     public writePDF() {
         try {
@@ -209,8 +206,8 @@ public class writePDF {
                 SanPhamDTO sp = new SanPhamDAO().selectByPhienBan(ctp.getMaphienbansp() + "");
                 table.addCell(new PdfPCell(new Phrase(sp.getTensp(), fontNormal10)));
                 PhienBanSanPhamDTO pbsp = new PhienBanSanPhamDAO().selectById(ctp.getMaphienbansp());
-                table.addCell(new PdfPCell(new Phrase(romBus.getKichThuocById(pbsp.getRom()) + "GB - "
-                        + ramBus.getKichThuocById(pbsp.getRam()) + "GB - " + mausacBus.getTenMau(pbsp.getMausac()), fontNormal10)));
+//                table.addCell(new PdfPCell(new Phrase(romBus.getKichThuocById(pbsp.getRom()) + "GB - "
+//                        + ramBus.getKichThuocById(pbsp.getRam()) + "GB - " + mausacBus.getTenMau(pbsp.getMausac()), fontNormal10)));
                 table.addCell(new PdfPCell(new Phrase(formatter.format(ctp.getDongia()) + "đ", fontNormal10)));
                 table.addCell(new PdfPCell(new Phrase(String.valueOf(ctp.getSoluong()), fontNormal10)));
                 table.addCell(new PdfPCell(new Phrase(formatter.format(ctp.getSoluong() * ctp.getDongia()) + "đ", fontNormal10)));
@@ -325,8 +322,8 @@ public class writePDF {
                 SanPhamDTO sp = new SanPhamDAO().selectByPhienBan(ctp.getMaphienbansp() + "");
                 table.addCell(new PdfPCell(new Phrase(sp.getTensp(), fontNormal10)));
                 PhienBanSanPhamDTO pbsp = new PhienBanSanPhamDAO().selectById(ctp.getMaphienbansp());
-                table.addCell(new PdfPCell(new Phrase(romBus.getKichThuocById(pbsp.getRom()) + "GB - "
-                        + ramBus.getKichThuocById(pbsp.getRam()) + "GB - " + mausacBus.getTenMau(pbsp.getMausac()), fontNormal10)));
+//                table.addCell(new PdfPCell(new Phrase(romBus.getKichThuocById(pbsp.getRom()) + "GB - "
+//                        + ramBus.getKichThuocById(pbsp.getRam()) + "GB - " + mausacBus.getTenMau(pbsp.getMausac()), fontNormal10)));
                 table.addCell(new PdfPCell(new Phrase(formatter.format(ctp.getDongia()) + "đ", fontNormal10)));
                 table.addCell(new PdfPCell(new Phrase(String.valueOf(ctp.getSoluong()), fontNormal10)));
                 table.addCell(new PdfPCell(new Phrase(formatter.format(ctp.getSoluong() * ctp.getDongia()) + "đ", fontNormal10)));

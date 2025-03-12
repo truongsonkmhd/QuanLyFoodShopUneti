@@ -1,17 +1,10 @@
 package GUI.Dialog;
 
 import BUS.ChiTietSanPhamBUS;
-import BUS.DungLuongRamBUS;
-import BUS.DungLuongRomBUS;
-import BUS.MauSacBUS;
 import BUS.PhienBanSanPhamBUS;
 import BUS.PhieuNhapBUS;
 import BUS.PhieuXuatBUS;
-import BUS.SanPhamBUS;
-import DAO.DungLuongRamDAO;
-import DAO.DungLuongRomDAO;
 import DAO.KhachHangDAO;
-import DAO.MauSacDAO;
 import DAO.NhaCungCapDAO;
 import DAO.NhanVienDAO;
 import DAO.SanPhamDAO;
@@ -114,9 +107,9 @@ public final class ChiTietPhieuDialog extends JDialog implements ActionListener 
             PhienBanSanPhamDTO pb = phienbanBus.getByMaPhienBan(ctPhieu.get(i).getMaphienbansp());
             tblModel.addRow(new Object[]{
                 i + 1, pb.getMasp(), SanPhamDAO.getInstance().selectById(pb.getMasp()+"").getTensp(), 
-                DungLuongRamDAO.getInstance().selectById(pb.getRam()+"").getDungluongram() + "GB",
-                DungLuongRomDAO.getInstance().selectById(pb.getRom()+"").getDungluongrom() + "GB", 
-                MauSacDAO.getInstance().selectById(pb.getMausac()+"").getTenmau(),
+//                DungLuongRamDAO.getInstance().selectById(pb.getRam()+"").getDungluongram() + "GB",
+//                DungLuongRomDAO.getInstance().selectById(pb.getRom()+"").getDungluongrom() + "GB", 
+//                MauSacDAO.getInstance().selectById(pb.getMausac()+"").getTenmau(),
                 Formater.FormatVND(ctPhieu.get(i).getDongia()), ctPhieu.get(i).getSoluong()
             });
         }

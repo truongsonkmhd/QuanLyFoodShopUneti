@@ -45,7 +45,7 @@ public class SelectImei extends JDialog{
     
     public SelectImei(JFrame owner, String title, boolean modal, TaoPhieuXuat taoPhieuXuat, ArrayList<ChiTietSanPhamDTO> ct){
         super(owner, title, modal);
-        this.jTextArea = taoPhieuXuat.textAreaImei;
+       // this.jTextArea = taoPhieuXuat.textAreaImei;
         this.ct = ct;
         init();
         setVisible(true);

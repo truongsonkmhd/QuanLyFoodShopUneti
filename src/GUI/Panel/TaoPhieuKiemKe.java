@@ -2,15 +2,9 @@ package GUI.Panel;
 
 import BUS.ChiTietSanPhamBUS;
 import BUS.PhienBanSanPhamBUS;
-import BUS.DungLuongRamBUS;
-import BUS.DungLuongRomBUS;
-import BUS.MauSacBUS;
 import BUS.NhaCungCapBUS;
-import BUS.PhieuKiemKeBUS;
 import BUS.PhieuNhapBUS;
 import BUS.SanPhamBUS;
-import DTO.ChiTietKiemKeDTO;
-import DTO.ChiTietKiemKeSanPhamDTO;
 import DTO.PhienBanSanPhamDTO;
 import DTO.ChiTietSanPhamDTO;
 import DTO.NhanVienDTO;
@@ -61,19 +55,14 @@ public final class TaoPhieuKiemKe extends JPanel implements ItemListener, Action
     SanPhamBUS spBUS = new SanPhamBUS();
     NhaCungCapBUS nccBus = new NhaCungCapBUS();
     PhienBanSanPhamBUS phienbanBus = new PhienBanSanPhamBUS();
-    DungLuongRamBUS ramBus = new DungLuongRamBUS();
-    DungLuongRomBUS romBus = new DungLuongRomBUS();
+
     PhieuNhapBUS phieunhapBus = new PhieuNhapBUS();
-    MauSacBUS mausacBus = new MauSacBUS();
     ChiTietSanPhamBUS chiTietSanPhamBUS = new ChiTietSanPhamBUS();
-    PhieuKiemKeBUS phieuKiemKeBUS = new PhieuKiemKeBUS();
+
     NhanVienDTO nhanVien;
 
     ArrayList<DTO.SanPhamDTO> listSP = spBUS.getAll();
     ArrayList<PhienBanSanPhamDTO> ch = new ArrayList<>();
-    ArrayList<ChiTietKiemKeDTO> danhSachKiemke = new ArrayList<>();
-    ArrayList<ChiTietKiemKeSanPhamDTO> danhSachKiemKeSanPham = new ArrayList<>();
-    HashMap<ChiTietKiemKeDTO, ArrayList<ChiTietKiemKeSanPhamDTO>> chiTietPhieu;
     int maphieukiemke;
     int rowPhieuSelect = -1;
     private ButtonCustom scanImei;
@@ -284,7 +273,7 @@ public final class TaoPhieuKiemKe extends JPanel implements ItemListener, Action
         right_top.setPreferredSize(new Dimension(300, 360));
         right_top.setOpaque(false);
         txtMaphieu = new InputForm("Mã phiếu");
-        txtMaphieu.setText("PKK" + phieuKiemKeBUS.getAutoIncrement());
+//        txtMaphieu.setText("PKK" + phieuKiemKeBUS.getAutoIncrement());
         txtMaphieu.setEditable(false);
         txtNhanVien = new InputForm("Nhân viên");
         txtNhanVien.setText(nhanVien.getHoten());
@@ -336,8 +325,8 @@ public final class TaoPhieuKiemKe extends JPanel implements ItemListener, Action
         int size = ch.size();
         String[] arr = new String[size];
         for (int i = 0; i < size; i++) {
-            arr[i] = romBus.getKichThuocById(ch.get(i).getRom()) + "GB - "
-                    + ramBus.getKichThuocById(ch.get(i).getRam()) + "GB - " + mausacBus.getTenMau(ch.get(i).getMausac());
+//            arr[i] = romBus.getKichThuocById(ch.get(i).getRom()) + "GB - "
+//                    + ramBus.getKichThuocById(ch.get(i).getRam()) + "GB - " + mausacBus.getTenMau(ch.get(i).getMausac());
         }
         return arr;
     }

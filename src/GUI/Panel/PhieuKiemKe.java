@@ -2,7 +2,6 @@ package GUI.Panel;
 
 import BUS.NhaCungCapBUS;
 import BUS.NhanVienBUS;
-import BUS.PhieuKiemKeBUS;
 import DTO.SanPhamDTO;
 import BUS.SanPhamBUS;
 import DTO.NhanVienDTO;
@@ -64,7 +63,7 @@ public class PhieuKiemKe extends JPanel implements ActionListener, PropertyChang
     
     NhaCungCapBUS nccBUS = new NhaCungCapBUS();
     NhanVienBUS nvBUS = new NhanVienBUS();
-    PhieuKiemKeBUS phieuKiemKeBUS = new PhieuKiemKeBUS();
+   // PhieuKiemKeBUS phieuKiemKeBUS = new PhieuKiemKeBUS();
     
     ArrayList<PhieuKiemKeDTO> listPhieu;
 
@@ -72,7 +71,7 @@ public class PhieuKiemKe extends JPanel implements ActionListener, PropertyChang
         this.m =m;
         this.nv = nv;
         initComponent();
-        this.listPhieu=phieuKiemKeBUS.getDanhSachPhieu();
+        //this.listPhieu=phieuKiemKeBUS.getDanhSachPhieu();
         loadDataTalbe(this.listPhieu);
     }
     
@@ -212,9 +211,9 @@ public class PhieuKiemKe extends JPanel implements ActionListener, PropertyChang
             } else {
                 int check =  JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa phiếu này!","Xóa phiếu",JOptionPane.YES_NO_OPTION);
                 if(check == JOptionPane.YES_OPTION){
-                    phieuKiemKeBUS.cancel(index);
+           //         phieuKiemKeBUS.cancel(index);
                     JOptionPane.showMessageDialog(null, "Xóa phiếu thành công!");
-                    loadDataTalbe(phieuKiemKeBUS.selectAll());
+            //        loadDataTalbe(phieuKiemKeBUS.selectAll());
                 }
             }
         }
@@ -246,7 +245,7 @@ public class PhieuKiemKe extends JPanel implements ActionListener, PropertyChang
             String input = search.txtSearchForm.getText() != null ? search.txtSearchForm.getText() : "";
             Date time_start = dateStart.getDate() != null ? dateStart.getDate() : new Date(0);
             Date time_end = dateEnd.getDate() != null ? dateEnd.getDate() : new Date(System.currentTimeMillis());
-            this.listPhieu = phieuKiemKeBUS.fillerPhieuKiemKe(type, input, manv, time_start, time_end);
+        //    this.listPhieu = phieuKiemKeBUS.fillerPhieuKiemKe(type, input, manv, time_start, time_end);
             loadDataTalbe(listPhieu);
         }
     }

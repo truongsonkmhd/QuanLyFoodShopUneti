@@ -405,9 +405,9 @@ public final class TaoPhieuNhap extends JPanel implements ItemListener, ActionLi
         int phuongthucnhap = cbxPtNhap.getSelectedIndex();
         ArrayList<ChiTietSanPhamDTO> ctSP = getChiTietSanPham();
         int soluong = ctSP.size();
-        chitietsanpham.put(maphienbansp, getChiTietSanPham());
-        ChiTietPhieuNhapDTO ctphieu = new ChiTietPhieuNhapDTO(phuongthucnhap, maphieunhap, maphienbansp, soluong, gianhap);
-        return ctphieu;
+     //   chitietsanpham.put(maphienbansp, getChiTietSanPham());
+      //  ChiTietPhieuNhapDTO ctphieu = new ChiTietPhieuNhapDTO(phuongthucnhap, maphieunhap, maphienbansp, soluong, gianhap);
+        return null;
     }
     
     public boolean checkImeiExists(){
@@ -433,18 +433,18 @@ public final class TaoPhieuNhap extends JPanel implements ItemListener, ActionLi
 
     public ArrayList<ChiTietSanPhamDTO> getChiTietSanPham() {
         int hinhthuc = cbxPtNhap.getSelectedIndex();
-        int phienbansp = ch.get(cbxCauhinh.cbb.getSelectedIndex()).getMaphienbansp();
+      //  int phienbansp = ch.get(cbxCauhinh.cbb.getSelectedIndex()).getMaphienbansp();
         ArrayList<ChiTietSanPhamDTO> result = new ArrayList<>();
         if (hinhthuc == 1) {
             String[] arrimei = textAreaImei.getText().split("\n");
             for (int i = 0; i < arrimei.length; i++) {
-                result.add(new ChiTietSanPhamDTO(arrimei[i], phienbansp, maphieunhap, 0, 1));
+            //    result.add(new ChiTietSanPhamDTO(arrimei[i], phienbansp, maphieunhap, 0, 1));
             }
         } else {
             long imeibatdau = Long.parseLong(txtMaImeiTheoLo.getText());
             int soluong = Integer.parseInt(txtSoLuongImei.getText());
             for (long i = imeibatdau; i < imeibatdau + soluong; i++) {
-                result.add(new ChiTietSanPhamDTO(Long.toString(i), phienbansp, maphieunhap, 0, 1));
+              //  result.add(new ChiTietSanPhamDTO(Long.toString(i), phienbansp, maphieunhap, 0, 1));
             }
         }
         return result;
@@ -479,29 +479,29 @@ public final class TaoPhieuNhap extends JPanel implements ItemListener, ActionLi
     @Override
     public void itemStateChanged(ItemEvent e) {
         Object source = e.getSource();
-        if (source == cbxCauhinh.cbb) {
-            int index = cbxCauhinh.cbb.getSelectedIndex();
-            this.txtDongia.setText(Integer.toString(ch.get(index).getGianhap()));
-            ChiTietPhieuNhapDTO ctp = checkTonTai();
-            if (ctp == null) {
-                actionbtn("add");
-                this.txtSoLuongImei.setText("");
-                this.txtMaImeiTheoLo.setText("");
-                this.textAreaImei.setText("");
-            } else {
-                actionbtn("update");
-                setImei(ctp);
-            }
-        } else if (source == cbxPtNhap.cbb) {
-            int index = cbxPtNhap.cbb.getSelectedIndex();
-            CardLayout c = (CardLayout) content_right_bottom.getLayout();
-            switch (index) {
-                case 0 ->
-                    c.first(content_right_bottom);
-                case 1 ->
-                    c.last(content_right_bottom);
-            }
-        } 
+//        if (source == cbxCauhinh.cbb) {
+//            int index = cbxCauhinh.cbb.getSelectedIndex();
+//            this.txtDongia.setText(Integer.toString(ch.get(index).getGianhap()));
+//            ChiTietPhieuNhapDTO ctp = checkTonTai();
+//            if (ctp == null) {
+//                actionbtn("add");
+//                this.txtSoLuongImei.setText("");
+//                this.txtMaImeiTheoLo.setText("");
+//                this.textAreaImei.setText("");
+//            } else {
+//                actionbtn("update");
+//                setImei(ctp);
+//            }
+//        } else if (source == cbxPtNhap.cbb) {
+//            int index = cbxPtNhap.cbb.getSelectedIndex();
+//            CardLayout c = (CardLayout) content_right_bottom.getLayout();
+//            switch (index) {
+//                case 0 ->
+//                    c.first(content_right_bottom);
+//                case 1 ->
+//                    c.last(content_right_bottom);
+//            }
+//        } 
     }
 
     public void addCtPhieu() {
@@ -520,16 +520,16 @@ public final class TaoPhieuNhap extends JPanel implements ItemListener, ActionLi
     }
 
     public ChiTietPhieuNhapDTO checkTonTai() {
-        int mapb = ch.get(cbxCauhinh.cbb.getSelectedIndex()).getMaphienbansp();
-        ChiTietPhieuNhapDTO p = phieunhapBus.findCT(chitietphieu, mapb);
-        return p;
+     //   int mapb = ch.get(cbxCauhinh.cbb.getSelectedIndex()).getMaphienbansp();
+   //     ChiTietPhieuNhapDTO p = phieunhapBus.findCT(chitietphieu, mapb);
+        return null;
     }
 
     public void actionbtn(String type) {
         boolean val_1 = type.equals("add");
         boolean val_2 = type.equals("update");
         btnAddSp.setEnabled(val_1);
-        btnImport.setEnabled(val_1);
+        //btnImport.setEnabled(val_1);
         btnEditSP.setEnabled(val_2);
         btnDelete.setEnabled(val_2);
         content_btn.revalidate();
@@ -553,7 +553,7 @@ public final class TaoPhieuNhap extends JPanel implements ItemListener, ActionLi
         PhienBanSanPhamDTO pb = phienbanBus.getByMaPhienBan(phieu.getMaphienbansp());
         this.txtMaSp.setText(Integer.toString(pb.getMasp()));
         this.txtTenSp.setText(spBUS.getByMaSP(pb.getMasp()).getTensp());
-        this.cbxCauhinh.setSelectedIndex(phienbanBus.getIndexByMaPhienBan(ch, phieu.getMaphienbansp()));
+      //  this.cbxCauhinh.setSelectedIndex(phienbanBus.getIndexByMaPhienBan(ch, phieu.getMaphienbansp()));
         this.txtDongia.setText(Integer.toString(phieu.getDongia()));
         setImei(phieu);
     }
@@ -602,10 +602,10 @@ public final class TaoPhieuNhap extends JPanel implements ItemListener, ActionLi
             loadDataTableChiTietPhieu(chitietphieu);
             resetForm();
         } else if (source == btnEditSP) {
-            int mapb = ch.get(cbxCauhinh.cbb.getSelectedIndex()).getMaphienbansp();
-            chitietsanpham.remove(mapb);
+//            int mapb = ch.get(cbxCauhinh.cbb.getSelectedIndex()).getMaphienbansp();
+//            chitietsanpham.remove(mapb);
             ArrayList<ChiTietSanPhamDTO> ctsp = getChiTietSanPham();
-            chitietsanpham.put(mapb, ctsp);
+           // chitietsanpham.put(mapb, ctsp);
             int ptnhap = cbxPtNhap.getSelectedIndex();
             chitietphieu.get(rowPhieuSelect).setPhuongthucnnhap(ptnhap);
             chitietphieu.get(rowPhieuSelect).setSoluong(ctsp.size());

@@ -171,9 +171,9 @@ public final class SanPhamDialog extends JDialog implements ActionListener {
     public void initCardTwo(String type) {
         pncard2 = new JPanel(new BorderLayout());
         JPanel cauhinhtop = new JPanel(new GridLayout(1, 5));
-        cbxRom = new SelectForm("ROM", romBus.getArrKichThuoc());
-        cbxRam = new SelectForm("RAM", ramBus.getArrKichThuoc());
-        cbxMausac = new SelectForm("Màu sắc", mausacBus.getArrTenMauSac());
+//        cbxRom = new SelectForm("ROM", romBus.getArrKichThuoc());
+//        cbxRam = new SelectForm("RAM", ramBus.getArrKichThuoc());
+//        cbxMausac = new SelectForm("Màu sắc", mausacBus.getArrTenMauSac());
         txtgianhap = new InputForm("Giá nhập");
         PlainDocument nhap = (PlainDocument)txtgianhap.getTxtForm().getDocument();
         nhap.setDocumentFilter((new NumericDocumentFilter()));
@@ -386,8 +386,8 @@ public final class SanPhamDialog extends JDialog implements ActionListener {
             if(index < 0){
                 JOptionPane.showMessageDialog(this, "Vui lòng chọn cấu hình");
             } else {
-            listch.get(index).setRam(ramBus.getByIndex(cbxRam.getSelectedIndex()).getMadlram());
-            listch.get(index).setRom(romBus.getByIndex(cbxRom.getSelectedIndex()).getMadungluongrom());
+//            listch.get(index).setRam(ramBus.getByIndex(cbxRam.getSelectedIndex()).getMadlram());
+//            listch.get(index).setRom(romBus.getByIndex(cbxRom.getSelectedIndex()).getMadungluongrom());
             listch.get(index).setGianhap(Integer.parseInt(txtgianhap.getText()));
             listch.get(index).setGiaxuat(Integer.parseInt(txtgiaxuat.getText()));
             PhienBanSanPhamDAO.getInstance().update(listch.get(index));
@@ -436,8 +436,8 @@ public final class SanPhamDialog extends JDialog implements ActionListener {
             if(index < 0){
                 JOptionPane.showMessageDialog(this, "Vui lòng chọn cấu hình");
             } else {
-            listch.get(index).setRam(ramBus.getByIndex(cbxRam.getSelectedIndex()).getMadlram());
-            listch.get(index).setRom(romBus.getByIndex(cbxRom.getSelectedIndex()).getMadungluongrom());
+//            listch.get(index).setRam(ramBus.getByIndex(cbxRam.getSelectedIndex()).getMadlram());
+//            listch.get(index).setRom(romBus.getByIndex(cbxRom.getSelectedIndex()).getMadungluongrom());
             listch.get(index).setGianhap(Integer.parseInt(txtgianhap.getText()));
             listch.get(index).setGiaxuat(Integer.parseInt(txtgiaxuat.getText()));
             loadDataToTableCauHinh(this.listch);
@@ -474,23 +474,23 @@ public final class SanPhamDialog extends JDialog implements ActionListener {
     }
 
     public PhienBanSanPhamDTO getCauHinh() {
-        int rom = romBus.getByIndex(cbxRom.getSelectedIndex()).getMadungluongrom();
-        int ram = ramBus.getByIndex(cbxRam.getSelectedIndex()).getMadlram();
-        int gianhap = Integer.parseInt(txtgianhap.getText());
-        int giaban = Integer.parseInt(txtgiaxuat.getText());
-        PhienBanSanPhamDTO chsp = new PhienBanSanPhamDTO(mach, masp, ram, rom, gianhap, giaban,0);
-        mach++;
-        return chsp;
+//        int rom = romBus.getByIndex(cbxRom.getSelectedIndex()).getMadungluongrom();
+//        int ram = ramBus.getByIndex(cbxRam.getSelectedIndex()).getMadlram();
+//        int gianhap = Integer.parseInt(txtgianhap.getText());
+//        int giaban = Integer.parseInt(txtgiaxuat.getText());
+//        PhienBanSanPhamDTO chsp = new PhienBanSanPhamDTO(mach, masp, ram, rom, gianhap, giaban,0);
+//        mach++;
+        return null;
     }
     
     public PhienBanSanPhamDTO getCauHinh(int masanpham) {
-        int rom = romBus.getByIndex(cbxRom.getSelectedIndex()).getMadungluongrom();
-        int ram = ramBus.getByIndex(cbxRam.getSelectedIndex()).getMadlram();
+//        int rom = romBus.getByIndex(cbxRom.getSelectedIndex()).getMadungluongrom();
+//        int ram = ramBus.getByIndex(cbxRam.getSelectedIndex()).getMadlram();
         int gianhap = Integer.parseInt(txtgianhap.getText());
         int giaban = Integer.parseInt(txtgiaxuat.getText());
-        PhienBanSanPhamDTO chsp = new PhienBanSanPhamDTO(PhienBanSanPhamDAO.getInstance().getAutoIncrement(), masanpham, ram, rom, mausac, gianhap, giaban);
-        this.listch.add(chsp);
-        return chsp;
+//        PhienBanSanPhamDTO chsp = new PhienBanSanPhamDTO(PhienBanSanPhamDAO.getInstance().getAutoIncrement(), masanpham, ram, rom, mausac, gianhap, giaban);
+//        this.listch.add(chsp);
+        return null;
     }
 
     public boolean validateCardOne() {
@@ -527,11 +527,11 @@ public final class SanPhamDialog extends JDialog implements ActionListener {
     public void loadDataToTableCauHinh(ArrayList<PhienBanSanPhamDTO> ch) {
         tblModelch.setRowCount(0);
         for (int i = 0; i < ch.size(); i++) {
-            int ram = ramBus.getKichThuocById(ch.get(i).getRam());
-            int rom = romBus.getKichThuocById(ch.get(i).getRom());
-            tblModelch.addRow(new Object[]{i + 1, ram + "GB", rom + "GB",
-                 Formater.FormatVND(ch.get(i).getGianhap()), Formater.FormatVND(ch.get(i).getGiaxuat())
-            });
+//            int ram = ramBus.getKichThuocById(ch.get(i).getRam());
+//            int rom = romBus.getKichThuocById(ch.get(i).getRom());
+//            tblModelch.addRow(new Object[]{i + 1, ram + "GB", rom + "GB",
+//                 Formater.FormatVND(ch.get(i).getGianhap()), Formater.FormatVND(ch.get(i).getGiaxuat())
+//            });
         }
     }
 
@@ -544,8 +544,8 @@ public final class SanPhamDialog extends JDialog implements ActionListener {
     }
 
     public void setInfoCauHinh(PhienBanSanPhamDTO ch) {
-        cbxRam.setSelectedIndex(ramBus.getIndexByMaRam(ch.getRam()));
-        cbxRom.setSelectedIndex(romBus.getIndexByMaRom(ch.getRom()));
+//        cbxRam.setSelectedIndex(ramBus.getIndexByMaRam(ch.getRam()));
+//        cbxRom.setSelectedIndex(romBus.getIndexByMaRom(ch.getRom()));
         txtgianhap.setText(Integer.toString(ch.getGianhap()));
         txtgiaxuat.setText(Integer.toString(ch.getGiaxuat()));
     }

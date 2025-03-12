@@ -1,21 +1,13 @@
 package GUI.Panel;
 
-import GUI.Component.IntegratedSearch;
-import GUI.Component.MainFunction;
+
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import GUI.Component.PanelBorderRadius;
 import GUI.Component.itemTaskbar;
-import GUI.Dialog.ThuocTinhSanPham.LoaiMonAnDiaLog;
-import GUI.Dialog.ThuocTinhSanPham.DungLuongRomDialog;
 import GUI.Dialog.ThuocTinhSanPham.SizeMatHangDialog;
-import GUI.Dialog.ThuocTinhSanPham.MauSacDialog;
 import GUI.Dialog.ThuocTinhSanPham.ThuongHieuDialog;
 import GUI.Dialog.ThuocTinhSanPham.XuatXuDialog;
 import GUI.Main;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -27,7 +19,7 @@ public class QuanLyThuocTinhSP extends JPanel {
     ThuongHieuDialog th;
     XuatXuDialog xs;
     SizeMatHangDialog hdh;
-    LoaiMonAnDiaLog dlram;
+   // LoaiMonAnDiaLog dlram;
     Main m;
     public itemTaskbar[] listitem;
 
@@ -87,8 +79,8 @@ public class QuanLyThuocTinhSP extends JPanel {
         listitem[3].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-                dlram = new LoaiMonAnDiaLog(owner, QuanLyThuocTinhSP.this, "Quản lý size sản phẩm", true,m.user.getManhomquyen());
-                dlram.setVisible(true);
+//                dlram = new LoaiMonAnDiaLog(owner, QuanLyThuocTinhSP.this, "Quản lý size sản phẩm", true,m.user.getManhomquyen());
+//                dlram.setVisible(true);
             }
         });
   
