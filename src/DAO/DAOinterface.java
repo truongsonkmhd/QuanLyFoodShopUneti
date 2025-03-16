@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author robot
+ * @author truongs
  */
 public interface DAOinterface<T> {
     public int insert(T t);

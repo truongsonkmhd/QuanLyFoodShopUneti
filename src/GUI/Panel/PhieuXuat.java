@@ -132,7 +132,7 @@ public final class PhieuXuat extends JPanel implements ActionListener, KeyListen
         scrollTablePhieuXuat.setViewportView(tablePhieuXuat);
         tablePhieuXuat.setFocusable(false);
         TableSorter.configureTableColumnSorter(tablePhieuXuat, 0, TableSorter.INTEGER_COMPARATOR);
-        TableSorter.configureTableColumnSorter(tablePhieuXuat, 1, TableSorter.INTEGER_COMPARATOR);
+        TableSorter .configureTableColumnSorter(tablePhieuXuat, 1, TableSorter.INTEGER_COMPARATOR);
         TableSorter.configureTableColumnSorter(tablePhieuXuat, 5, TableSorter.VND_CURRENCY_COMPARATOR);
 
         main.add(scrollTablePhieuXuat);

@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package DTO;
 
 import java.util.Objects;
@@ -12,16 +9,16 @@ import java.util.Objects;
  */
 public class ChiTietPhieuDTO {
     private int maphieu;
-    private int maphienbansp;
+    private int masp;
     private int soluong;
-    private int dongia;
+    private double dongia;
 
     public ChiTietPhieuDTO() {
     }
 
-    public ChiTietPhieuDTO(int maphieu, int maphienbansp, int soluong, int dongia) {
+    public ChiTietPhieuDTO(int maphieu, int masp, int soluong, double dongia) {
         this.maphieu = maphieu;
-        this.maphienbansp = maphienbansp;
+        this.masp = masp;
         this.soluong = soluong;
         this.dongia = dongia;
     }
@@ -34,12 +31,12 @@ public class ChiTietPhieuDTO {
         this.maphieu = maphieu;
     }
 
-    public int getMaphienbansp() {
-        return maphienbansp;
+    public int getMasp() {
+        return masp;
     }
 
-    public void setMaphienbansp(int maphienbansp) {
-        this.maphienbansp = maphienbansp;
+    public void setMasp(int masp) {
+        this.masp = masp;
     }
 
     public int getSoluong() {
@@ -50,7 +47,7 @@ public class ChiTietPhieuDTO {
         this.soluong = soluong;
     }
 
-    public int getDongia() {
+    public double getDongia() {
         return dongia;
     }
 
@@ -61,10 +58,10 @@ public class ChiTietPhieuDTO {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 19 * hash + this.maphieu;
-        hash = 19 * hash + this.maphienbansp;
-        hash = 19 * hash + this.soluong;
-        hash = 19 * hash + this.dongia;
+        hash = 79 * hash + Objects.hashCode(this.maphieu);
+        hash = 79 * hash + this.masp;
+        hash = 79 * hash + this.soluong;
+        hash = 79 * hash + (int) (Double.doubleToLongBits(this.dongia) ^ (Double.doubleToLongBits(this.dongia) >>> 32));
         return hash;
     }
 
@@ -80,22 +77,18 @@ public class ChiTietPhieuDTO {
             return false;
         }
         final ChiTietPhieuDTO other = (ChiTietPhieuDTO) obj;
-        if (this.maphieu != other.maphieu) {
-            return false;
-        }
-        if (this.maphienbansp != other.maphienbansp) {
+        if (this.masp != other.masp) {
             return false;
         }
         if (this.soluong != other.soluong) {
             return false;
         }
-        return this.dongia == other.dongia;
+        if (Double.doubleToLongBits(this.dongia) != Double.doubleToLongBits(other.dongia)) {
+            return false;
+        }
+        return Objects.equals(this.maphieu, other.maphieu);
     }
-
-    @Override
-    public String toString() {
-        return "ChiTietPhieuDTO{" + "maphieu=" + maphieu + ", maphienbansp=" + maphienbansp + ", soluong=" + soluong + ", dongia=" + dongia + '}';
-    }
-
+    
+    
     
 }

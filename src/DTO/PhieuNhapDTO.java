@@ -1,14 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package DTO;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 /**
  *
- * @author Tran Nhat Sinh
+ * @author truongsonkmhd
  */
 public class PhieuNhapDTO extends PhieuDTO{
     private int manhacungcap;
@@ -17,9 +15,17 @@ public class PhieuNhapDTO extends PhieuDTO{
         this.manhacungcap = manhacungcap;
     }
 
-    public PhieuNhapDTO(int manhacungcap, int maphieu, int manguoitao, Timestamp thoigiantao, long tongTien, int trangthai) {
-        super(maphieu, manguoitao, thoigiantao, tongTien, trangthai);
-        this.manhacungcap = manhacungcap;
+    public PhieuNhapDTO() {
+    }
+
+    public PhieuNhapDTO(int manhacungcap,int maphieu, int manguoitao, Timestamp thoigiantao, ArrayList<ChiTietPhieuDTO> CTPhieu, double tongTien) {
+        super(maphieu, manguoitao, thoigiantao, CTPhieu, tongTien);
+             this.manhacungcap = manhacungcap;
+    }
+
+    public PhieuNhapDTO(int manhacungcap,int maphieu, int manguoitao, Timestamp thoigiantao, ArrayList<ChiTietPhieuDTO> CTPhieu, double tongTien, int trangthai) {
+        super(maphieu, manguoitao, thoigiantao, CTPhieu, tongTien, trangthai);
+         this.manhacungcap = manhacungcap;
     }
 
     public int getManhacungcap() {

@@ -1,7 +1,5 @@
 package DAO;
 
-import DTO.ChiTietPhieuDTO;
-import DTO.ChiTietSanPhamDTO;
 import DTO.PhieuXuatDTO;
 import config.JDBCUtil;
 import java.sql.Connection;
@@ -51,7 +49,7 @@ public class PhieuXuatDAO implements DAOinterface<PhieuXuatDTO> {
             String sql = "UPDATE `phieuxuat` SET `thoigian`=?,`manhacungcap`=?,`tongtien`=?,`trangthai`=? WHERE `maphieuxuat`=?";
             PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
             pst.setTimestamp(1, t.getThoigiantao());
-            pst.setLong(3, t.getTongTien());
+            pst.setDouble(3, t.getTongTien());
             pst.setInt(4, t.getTrangthai());
             pst.setInt(5, t.getMaphieu());
             result = pst.executeUpdate();
@@ -128,23 +126,7 @@ public class PhieuXuatDAO implements DAOinterface<PhieuXuatDTO> {
         }
         return result;
     }
-    
-    public PhieuXuatDTO cancel(int phieu) {
-        PhieuXuatDTO result = null;
-        try {
-            ArrayList<ChiTietSanPhamDTO> chitietsanpham = ChiTietSanPhamDAO.getInstance().selectAllByMaPhieuXuat(phieu);
-            ArrayList<ChiTietPhieuDTO> chitietphieu = ChiTietPhieuXuatDAO.getInstance().selectAll(phieu+"");
-            ChiTietPhieuXuatDAO.getInstance().reset(chitietphieu);
-            for (ChiTietSanPhamDTO chiTietSanPhamDTO : chitietsanpham) {
-                ChiTietSanPhamDAO.getInstance().reset(chiTietSanPhamDTO);
-            }
-            deletePhieu(phieu);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return result;
-    }
-    
+        
     public int deletePhieu(int t) {
         int result = 0 ;
         try {

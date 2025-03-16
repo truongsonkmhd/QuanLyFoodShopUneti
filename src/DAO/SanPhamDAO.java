@@ -26,8 +26,8 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
             pst.setInt(1, t.getMasp());
             pst.setString(2, t.getTensp());
             pst.setString(3, t.getHinhanh());
-            pst.setInt(4, t.getXuatxu());
-            pst.setInt(5, t.getThuonghieu());
+            pst.setString(4, t.getXuatxu());
+            pst.setString(5, t.getThuonghieu());
             pst.setInt(6, t.getKhuvuckho());
             result = pst.executeUpdate();
             JDBCUtil.closeConnection(con);
@@ -46,8 +46,8 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
             PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
             pst.setString(1, t.getTensp());
             pst.setString(2, t.getHinhanh());
-            pst.setInt(3, t.getXuatxu());
-            pst.setInt(4, t.getThuonghieu());
+            pst.setString(3, t.getXuatxu());
+            pst.setString(4, t.getThuonghieu());
             pst.setInt(5, t.getKhuvuckho());
             pst.setInt(6, t.getMasp());
             result = pst.executeUpdate();
@@ -86,8 +86,8 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
                 int madm = rs.getInt("masp");
                 String tendm = rs.getString("tensp");
                 String hinhanh = rs.getString("hinhanh");
-                int xuatxu = rs.getInt("xuatxu");
-                int thuonghieu = rs.getInt("thuonghieu");
+                String xuatxu = rs.getString("xuatxu");
+                String thuonghieu = rs.getString("thuonghieu");
                 int khuvuckho = rs.getInt("khuvuckho");
                 int soluongton = rs.getInt("soluongton");
                 SanPhamDTO sp = new SanPhamDTO(madm, tendm, hinhanh, xuatxu, thuonghieu, khuvuckho, soluongton);
@@ -112,8 +112,8 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
                 int madm = rs.getInt("masp");
                 String tendm = rs.getString("tensp");
                 String hinhanh = rs.getString("hinhanh");
-                int xuatxu = rs.getInt("xuatxu");
-                int thuonghieu = rs.getInt("thuonghieu");
+                String xuatxu = rs.getString("xuatxu");
+                String thuonghieu = rs.getString("thuonghieu");
                 int khuvuckho = rs.getInt("khuvuckho");
                 int soluongton = rs.getInt("soluongton");
                 result = new SanPhamDTO(madm, tendm, hinhanh, xuatxu, thuonghieu, khuvuckho, soluongton);
@@ -124,30 +124,6 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
         return result;
     }
     
-    public SanPhamDTO selectByPhienBan(String t) {
-        SanPhamDTO result = null;
-        try {
-            Connection con = (Connection) JDBCUtil.getConnection();
-            String sql = "SELECT * FROM sanpham sp join phienbansanpham pb on sp.masp=pb.masp WHERE maphienbansp=?";
-            PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
-            pst.setString(1, t);
-            ResultSet rs = (ResultSet) pst.executeQuery();
-            while (rs.next()) {
-                int madm = rs.getInt("masp");
-                String tendm = rs.getString("tensp");
-                String hinhanh = rs.getString("hinhanh");
-                int xuatxu = rs.getInt("xuatxu");
-                int thuonghieu = rs.getInt("thuonghieu");
-                int khuvuckho = rs.getInt("khuvuckho");
-                int soluongton = rs.getInt("soluongton");
-                result = new SanPhamDTO(madm, tendm, hinhanh, xuatxu, thuonghieu, khuvuckho, soluongton);
-            }
-            JDBCUtil.closeConnection(con);
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return result;
-    }
 
     @Override
     public int getAutoIncrement() {
@@ -187,5 +163,23 @@ public class SanPhamDAO implements DAOinterface<SanPhamDTO> {
             Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
+    }
+    
+    public int getSl() {
+        int soluong = 0;
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = "SELECT * FROM sanpham WHERE trangThai = 1";
+            PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                soluong++;
+            }
+            JDBCUtil.closeConnection(con);
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return soluong;
     }
 }

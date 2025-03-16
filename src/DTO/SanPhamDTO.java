@@ -12,15 +12,15 @@ public class SanPhamDTO {
     private int masp;
     private String tensp;
     private String hinhanh;
-    private int xuatxu;
-    private int thuonghieu;
+    private String xuatxu;
+    private String thuonghieu;
     private int khuvuckho;
     private int soluongton;
 
     public SanPhamDTO() {
     }
 
-    public SanPhamDTO(int masp, String tensp, String hinhanh, int xuatxu, int thuonghieu, int khuvuckho, int soluongton) {
+    public SanPhamDTO(int masp, String tensp, String hinhanh, String xuatxu, String thuonghieu, int khuvuckho, int soluongton) {
         this.masp = masp;
         this.tensp = tensp;
         this.hinhanh = hinhanh;
@@ -30,6 +30,7 @@ public class SanPhamDTO {
         this.soluongton = soluongton;
     }
 
+    
     public int getMasp() {
         return masp;
     }
@@ -54,19 +55,19 @@ public class SanPhamDTO {
         this.hinhanh = hinhanh;
     }
 
-    public int getXuatxu() {
+    public String getXuatxu() {
         return xuatxu;
     }
 
-    public void setXuatxu(int xuatxu) {
+    public void setXuatxu(String xuatxu) {
         this.xuatxu = xuatxu;
     }
 
-    public int getThuonghieu() {
+    public String getThuonghieu() {
         return thuonghieu;
     }
 
-    public void setThuonghieu(int thuonghieu) {
+    public void setThuonghieu(String thuonghieu) {
         this.thuonghieu = thuonghieu;
     }
 
@@ -88,14 +89,14 @@ public class SanPhamDTO {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 29 * hash + this.masp;
-        hash = 29 * hash + Objects.hashCode(this.tensp);
-        hash = 29 * hash + Objects.hashCode(this.hinhanh);
-        hash = 29 * hash + this.xuatxu;
-        hash = 29 * hash + this.thuonghieu;
-        hash = 29 * hash + this.khuvuckho;
-        hash = 29 * hash + this.soluongton;
+        int hash = 7;
+        hash = 89 * hash + this.masp;
+        hash = 89 * hash + Objects.hashCode(this.tensp);
+        hash = 89 * hash + Objects.hashCode(this.hinhanh);
+        hash = 89 * hash + Objects.hashCode(this.xuatxu);
+        hash = 89 * hash + Objects.hashCode(this.thuonghieu);
+        hash = 89 * hash + this.khuvuckho;
+        hash = 89 * hash + this.soluongton;
         return hash;
     }
 
@@ -114,12 +115,6 @@ public class SanPhamDTO {
         if (this.masp != other.masp) {
             return false;
         }
-        if (this.xuatxu != other.xuatxu) {
-            return false;
-        }
-        if (this.thuonghieu != other.thuonghieu) {
-            return false;
-        }
         if (this.khuvuckho != other.khuvuckho) {
             return false;
         }
@@ -129,8 +124,15 @@ public class SanPhamDTO {
         if (!Objects.equals(this.tensp, other.tensp)) {
             return false;
         }
-        return Objects.equals(this.hinhanh, other.hinhanh);
+        if (!Objects.equals(this.hinhanh, other.hinhanh)) {
+            return false;
+        }
+        if (!Objects.equals(this.xuatxu, other.xuatxu)) {
+            return false;
+        }
+        return Objects.equals(this.thuonghieu, other.thuonghieu);
     }
 
+       
    
 }

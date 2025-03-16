@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DAO;
 
@@ -8,8 +8,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Tran Nhat Sinh
- * @param <T>
+ * @author truongsonkmhd
  */
 public interface ChiTietInterface<T> {
     public int insert(ArrayList<T> t);

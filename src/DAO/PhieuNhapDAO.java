@@ -1,7 +1,6 @@
 package DAO;
 
-import DTO.ChiTietPhieuNhapDTO;
-import DTO.ChiTietSanPhamDTO;
+import DTO.PhieuDTO;
 import DTO.PhieuNhapDTO;
 import config.JDBCUtil;
 import java.sql.Connection;
@@ -12,11 +11,10 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Date;
 
 /**
  *
- * @author Tran Nhat Sinh
+ * @author truongsonkmhd
  */
 public class PhieuNhapDAO implements DAOinterface<PhieuNhapDTO> {
 
@@ -54,7 +52,7 @@ public class PhieuNhapDAO implements DAOinterface<PhieuNhapDTO> {
             PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
             pst.setTimestamp(1, t.getThoigiantao());
             pst.setInt(2, t.getManhacungcap());
-            pst.setLong(3, t.getTongTien());
+            pst.setDouble(3, t.getTongTien());
             pst.setInt(4, t.getTrangthai());
             pst.setInt(5, t.getMaphieu());
             result = pst.executeUpdate();
@@ -94,9 +92,9 @@ public class PhieuNhapDAO implements DAOinterface<PhieuNhapDTO> {
                 Timestamp thoigiantao = rs.getTimestamp("thoigian");
                 int mancc = rs.getInt("manhacungcap");
                 int nguoitao = rs.getInt("nguoitao");
-                long tongtien = rs.getLong("tongtien");
+                double tongtien = rs.getDouble("tongtien");
                 int trangthai = rs.getInt("trangthai");
-                PhieuNhapDTO phieunhap = new PhieuNhapDTO(mancc, maphieu, nguoitao, thoigiantao, tongtien, trangthai);
+                PhieuNhapDTO phieunhap = new PhieuNhapDTO(mancc, maphieu, nguoitao, thoigiantao,ChiTietPhieuNhapDAO.getInstance().selectAll(maphieu), tongtien, trangthai);
                 result.add(phieunhap);
             }
             JDBCUtil.closeConnection(con);
@@ -119,9 +117,9 @@ public class PhieuNhapDAO implements DAOinterface<PhieuNhapDTO> {
                 Timestamp thoigiantao = rs.getTimestamp("thoigian");
                 int mancc = rs.getInt("manhacungcap");
                 int nguoitao = rs.getInt("nguoitao");
-                long tongtien = rs.getLong("tongtien");
+                double tongtien = rs.getDouble("tongtien");
                 int trangthai = rs.getInt("trangthai");
-                result = new PhieuNhapDTO(mancc, maphieu, nguoitao, thoigiantao, tongtien, trangthai);
+                result = new PhieuNhapDTO(mancc, maphieu, nguoitao,thoigiantao,ChiTietPhieuNhapDAO.getInstance().selectAll(maphieu), tongtien, trangthai);
             }
             JDBCUtil.closeConnection(con);
         } catch (Exception e) {
@@ -144,9 +142,10 @@ public class PhieuNhapDAO implements DAOinterface<PhieuNhapDTO> {
                 Timestamp thoigiantao = rs.getTimestamp("thoigian");
                 int mancc = rs.getInt("manhacungcap");
                 int nguoitao = rs.getInt("nguoitao");
-                long tongtien = rs.getLong("tongtien");
+                double tongtien = rs.getDouble("tongtien");
                 int trangthai = rs.getInt("trangthai");
-                PhieuNhapDTO phieunhap = new PhieuNhapDTO(mancc, maphieu, nguoitao, thoigiantao, tongtien, trangthai);
+
+                PhieuNhapDTO phieunhap = new PhieuNhapDTO(mancc, maphieu, nguoitao, thoigiantao,ChiTietPhieuNhapDAO.getInstance().selectAll(maphieu), tongtien, trangthai);
                 result.add(phieunhap);
             }
             JDBCUtil.closeConnection(con);
@@ -155,56 +154,6 @@ public class PhieuNhapDAO implements DAOinterface<PhieuNhapDTO> {
         return result;
     }
     
-    public boolean checkCancelPn(int maphieu){
-        ArrayList<ChiTietSanPhamDTO> result = new ArrayList<>();
-        try {
-            Connection con = (Connection) JDBCUtil.getConnection();
-            String sql = "SELECT * FROM ctsanpham WHERE maphieunhap=?";
-            PreparedStatement pst = (PreparedStatement) con.prepareStatement(sql);
-            pst.setInt(1, maphieu);
-            ResultSet rs = (ResultSet) pst.executeQuery();
-            while (rs.next()) {
-                String imei = rs.getString("maimei");
-                int macauhinh = rs.getInt("maphienbansp");
-                int maphieunhap = rs.getInt("maphieunhap");
-                int maphieuxuat = rs.getInt("maphieuxuat");
-                int tinhtrang = rs.getInt("tinhtrang");
-                ChiTietSanPhamDTO ct = new ChiTietSanPhamDTO(imei, macauhinh, maphieunhap, maphieuxuat, tinhtrang);
-                result.add(ct);
-            }
-            JDBCUtil.closeConnection(con);
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        for (ChiTietSanPhamDTO chiTietSanPhamDTO : result) {
-            if(chiTietSanPhamDTO.getMaphieuxuat()!=0){
-                return false;
-            }
-        }
-        return true;
-    }
-    
-    public int cancelPhieuNhap(int maphieu){
-        int result = 0;
-        ChiTietSanPhamDAO.getInstance().deletePn(maphieu);
-        ArrayList<ChiTietPhieuNhapDTO> arrCt = ChiTietPhieuNhapDAO.getInstance().selectAll(Integer.toString(maphieu));
-        for (ChiTietPhieuNhapDTO chiTietPhieuNhapDTO : arrCt) {
-            PhienBanSanPhamDAO.getInstance().updateSoLuongTon(chiTietPhieuNhapDTO.getMaphienbansp(), -(chiTietPhieuNhapDTO.getSoluong()));
-        }
-        ChiTietPhieuNhapDAO.getInstance().delete(Integer.toString(maphieu));
-        try {
-            Connection con = (Connection) JDBCUtil.getConnection();
-            String sql = "DELETE FROM phieunhap WHERE maphieunhap = ?";
-            PreparedStatement pst = con.prepareStatement(sql);
-            pst.setInt(1, maphieu);
-            result = pst.executeUpdate();
-            JDBCUtil.closeConnection(con);
-        } catch (SQLException ex) {
-            Logger.getLogger(PhieuNhapDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return result;
-    }
-
     @Override
     public int getAutoIncrement() {
         int result = -1;
@@ -226,4 +175,26 @@ public class PhieuNhapDAO implements DAOinterface<PhieuNhapDTO> {
         return result;
     }
 
+    
+    public ArrayList<PhieuDTO> selectAllP() {
+        ArrayList<PhieuDTO> ketQua = new ArrayList<>();
+        try {
+            Connection con = JDBCUtil.getConnection();
+            String sql = "SELECT maPhieu,thoiGianTao,nguoiTao,tongTien FROM phieunhap UNION SELECT * FROM phieuxuat ORDER BY thoigian DESC";
+            PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                int maPhieu = rs.getInt("maphieu");
+                Timestamp thoiGianTao = rs.getTimestamp("thoigian");
+                int maNguoiTao = rs.getInt("nguoitaophieuxuat");
+                double tongTien = rs.getDouble("tongtien");
+                PhieuDTO p = new PhieuDTO(maPhieu , maNguoiTao, thoiGianTao, ChiTietPhieuNhapDAO.getInstance().selectAll(maPhieu), tongTien);
+                ketQua.add(p);
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return ketQua;
+    }
 }
