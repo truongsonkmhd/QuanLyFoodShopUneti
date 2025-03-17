@@ -1,7 +1,6 @@
 package BUS;
 
 import DAO.ChiTietPhieuXuatDAO;
-import DAO.ChiTietSanPhamDAO;
 import DAO.PhieuXuatDAO;
 import DTO.ChiTietPhieuDTO;
 import DTO.PhieuXuatDTO;
@@ -19,7 +18,6 @@ public class PhieuXuatBUS {
     private final PhieuXuatDAO phieuXuatDAO = PhieuXuatDAO.getInstance();
 
     private final ChiTietPhieuXuatDAO chiTietPhieuXuatDAO = ChiTietPhieuXuatDAO.getInstance();
-    private final ChiTietSanPhamDAO chiTietSanPhamDAO = ChiTietSanPhamDAO.getInstance();
     private final ArrayList<PhieuXuatDTO> listPhieuXuat;
 
     NhanVienBUS nvBUS = new NhanVienBUS();
@@ -37,17 +35,13 @@ public class PhieuXuatBUS {
         return listPhieuXuat.get(index);
     }
 
-    public void cancel(int px) {
-        phieuXuatDAO.cancel(px);
-    }
-
     public void remove(int px) {
         listPhieuXuat.remove(px);
     }
 
     public void insert(PhieuXuatDTO px, ArrayList<ChiTietPhieuDTO> ct) {
         phieuXuatDAO.insert(px);
-        chiTietPhieuXuatDAO.insert(ct);
+        //chiTietPhieuXuatDAO.insert(ct);
     }
 
     public ArrayList<ChiTietPhieuDTO> selectCTP(int maphieu) {

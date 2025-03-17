@@ -9,7 +9,6 @@ import GUI.Component.InputDate;
 import GUI.Component.InputForm;
 import GUI.Main;
 import GUI.Component.IntegratedSearch;
-import GUI.Component.MainFunction;
 import GUI.Component.NumericDocumentFilter;
 import java.awt.*;
 import javax.swing.*;
@@ -17,9 +16,7 @@ import javax.swing.border.EmptyBorder;
 import GUI.Component.PanelBorderRadius;
 import GUI.Component.SelectForm;
 import GUI.Component.TableSorter;
-import GUI.Dialog.ChiTietPhieuDialog;
 import helper.Formater;
-import helper.JTableExporter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -28,11 +25,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Date;
@@ -47,14 +42,12 @@ public final class PhieuNhap extends JPanel implements ActionListener, KeyListen
     JPanel pnlBorder1, pnlBorder2, pnlBorder3, pnlBorder4, contentCenter;
     JTable tablePhieuNhap;
     JScrollPane scrollTablePhieuNhap;
-    MainFunction mainFunction;
     IntegratedSearch search;
     DefaultTableModel tblModel;
     SelectForm cbxNhaCungCap, cbxNhanVien;
     InputDate dateStart, dateEnd;
     InputForm moneyMin, moneyMax;
 
-    TaoPhieuNhap nhapKho;
     Main m;
     NhanVienDTO nv;
 
@@ -137,16 +130,6 @@ public final class PhieuNhap extends JPanel implements ActionListener, KeyListen
         functionBar.setPreferredSize(new Dimension(0, 100));
         functionBar.setLayout(new GridLayout(1, 2, 50, 0));
         functionBar.setBorder(new EmptyBorder(10, 10, 10, 10));
-
-        String[] action = {"create", "detail", "cancel", "export"};
-        mainFunction = new MainFunction(m.user.getManhomquyen(), "nhaphang", action);
-
-        //Add Event MouseListener
-        for (String ac : action) {
-            mainFunction.btn.get(ac).addActionListener(this);
-        }
-
-        functionBar.add(mainFunction);
 
         String[] objToSearch = {"Tất cả", "Mã phiếu nhập", "Nhà cung cấp", "Nhân viên nhập"};
         search = new IntegratedSearch(objToSearch);
@@ -282,44 +265,48 @@ public final class PhieuNhap extends JPanel implements ActionListener, KeyListen
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
-        if (source == mainFunction.btn.get("create")) {
-            nhapKho = new TaoPhieuNhap(nv, "create", m);
-            m.setPanel(nhapKho);
-        } else if (source == mainFunction.btn.get("detail")) {
-            int index = getRowSelected();
-            if (index != -1) {
-//                nhapKho = new TaoPhieuNhap(nv, "view", listPhieu.get(index), m);
-//                m.setPanel(nhapKho);
-                ChiTietPhieuDialog ctsp = new ChiTietPhieuDialog(m, "Thông tin phiếu nhập", true, listPhieu.get(index));
-            }
-        } else if (source == mainFunction.btn.get("cancel")) {
-            int index = getRowSelected();
-            if (index != -1) {
-                int input = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn huỷ phiếu ?\nThao tác này không thể hoàn tác nên hãy suy nghĩ kĩ !", "Huỷ phiếu", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
-                if (input == 0) {
-                    PhieuNhapDTO pn = listPhieu.get(index);
-                    System.out.println(pn);
-                    if (!phieunhapBUS.checkCancelPn(pn.getMaphieu())) {
-                        JOptionPane.showMessageDialog(null, "Sản phẩm trong phiếu này đã được xuất đi không thể hủy phiếu này!");
-                    } else {
-                        int c = phieunhapBUS.cancelPhieuNhap(pn.getMaphieu());
-                        if (c == 0) {
-                            JOptionPane.showMessageDialog(null, "Hủy phiếu không thành công!");
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Hủy phiếu thành công!");
-                            loadDataTalbe(phieunhapBUS.getAll());
-                        }
-                    }
-                }
-            }
-        } else if (source == search.btnReset) {
+//        if (source == mainFunction.btn.get("create")) {
+//            nhapKho = new TaoPhieuNhap(nv, "create", m);
+//            m.setPanel(nhapKho);
+//        } else if (source == mainFunction.btn.get("detail")) {
+//            int index = getRowSelected();
+//            if (index != -1) {
+////                nhapKho = new TaoPhieuNhap(nv, "view", listPhieu.get(index), m);
+////                m.setPanel(nhapKho);
+//                ChiTietPhieuDialog ctsp = new ChiTietPhieuDialog(m, "Thông tin phiếu nhập", true, listPhieu.get(index));
+//            }
+//        } else if (source == mainFunction.btn.get("cancel")) {
+//            int index = getRowSelected();
+//            if (index != -1) {
+//                int input = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn huỷ phiếu ?\nThao tác này không thể hoàn tác nên hãy suy nghĩ kĩ !", "Huỷ phiếu", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+//                if (input == 0) {
+//                    PhieuNhapDTO pn = listPhieu.get(index);
+//                    System.out.println(pn);
+////                    if (!phieunhapBUS.checkCancelPn(pn.getMaphieu())) {
+////                        JOptionPane.showMessageDialog(null, "Sản phẩm trong phiếu này đã được xuất đi không thể hủy phiếu này!");
+////                    } else {
+////                        int c = phieunhapBUS.cancelPhieuNhap(pn.getMaphieu());
+////                        if (c == 0) {
+////                            JOptionPane.showMessageDialog(null, "Hủy phiếu không thành công!");
+////                        } else {
+////                            JOptionPane.showMessageDialog(null, "Hủy phiếu thành công!");
+////                            loadDataTalbe(phieunhapBUS.getAll());
+////                        }
+////                    }
+//                }
+//            }
+//        } else if (source == search.btnReset) {
+//            resetForm();
+//        } else if (source == mainFunction.btn.get("export")) {
+//            try {
+//                JTableExporter.exportJTableToExcel(tablePhieuNhap);
+//            } catch (IOException ex) {
+//                Logger.getLogger(PhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+//        
+        if (source == search.btnReset) {    
             resetForm();
-        } else if (source == mainFunction.btn.get("export")) {
-            try {
-                JTableExporter.exportJTableToExcel(tablePhieuNhap);
-            } catch (IOException ex) {
-                Logger.getLogger(PhieuNhap.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
     }
 

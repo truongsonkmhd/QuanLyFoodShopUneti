@@ -42,7 +42,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
- * @author robot
+ * @author truongsonkmhd
  */
 public class NhanVienBUS implements ActionListener, DocumentListener {
 
@@ -88,7 +88,7 @@ public class NhanVienBUS implements ActionListener, DocumentListener {
     
     
     public String getNameById(int manv) {
-        return nhanVienDAO.selectById(manv+"").getHoten();
+        return nhanVienDAO.selectById(manv).getHoten();
     }
 
     public String[] getArrTenNhanVien() {

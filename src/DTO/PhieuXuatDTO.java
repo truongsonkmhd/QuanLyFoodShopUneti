@@ -18,8 +18,8 @@ public class PhieuXuatDTO extends PhieuDTO{
         this.makh = makh;
     }
 
-    public PhieuXuatDTO(int makh, int maphieu, int manguoitao, Timestamp thoigiantao, long tongTien, int trangthai) {
-        super(maphieu, manguoitao, thoigiantao, tongTien, trangthai);
+    public PhieuXuatDTO(int makh, int maphieu, int manguoitao, Timestamp thoigiantao, ArrayList<ChiTietPhieuDTO> CTPhieu, long tongTien, int trangthai) {
+        super(maphieu, manguoitao, thoigiantao,CTPhieu, tongTien, trangthai);
         this.makh = makh;
     }
 

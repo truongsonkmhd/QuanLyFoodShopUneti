@@ -1,9 +1,5 @@
 package GUI.Dialog;
 
-import BUS.ChiTietSanPhamBUS;
-import BUS.PhienBanSanPhamBUS;
-import DTO.ChiTietSanPhamDTO;
-import DTO.PhienBanSanPhamDTO;
 import DTO.SanPhamDTO;
 import GUI.Component.HeaderTitle;
 import GUI.Component.InputForm;
@@ -12,16 +8,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -41,18 +31,13 @@ public class ChiTietSanPhamDialog extends JDialog implements KeyListener, ItemLi
 
     HeaderTitle titlePage;
     JPanel pnmain, pnmain_top, pnmain_bottom, pnmain_top_left, pnmain_top_right;
-    SelectForm cbxPhienBan, cbxTinhTrang;
+    SelectForm cbxTinhTrang;
     InputForm txtSearch,txtSoluong;
     DefaultTableModel tblModel;
     JTable table;
     JScrollPane scrollTable;
-    ChiTietSanPhamBUS ctspbus = new ChiTietSanPhamBUS();
-    ArrayList<ChiTietSanPhamDTO> listctsp = new ArrayList<>();
-    ArrayList<PhienBanSanPhamDTO> ch = new ArrayList<>();
-    PhienBanSanPhamBUS phienbanBus = new PhienBanSanPhamBUS();
-//    DungLuongRamBUS ramBus = new DungLuongRamBUS();
-//    DungLuongRomBUS romBus = new DungLuongRomBUS();
-//    MauSacBUS mausacBus = new MauSacBUS();
+   
+
 
     SanPhamDTO spdto;
 
@@ -60,10 +45,7 @@ public class ChiTietSanPhamDialog extends JDialog implements KeyListener, ItemLi
         super(owner, title, modal);
         this.spdto = sp;
         initComponent(title);
-        loadDataTable(listctsp);
-        for (ChiTietSanPhamDTO chiTietSanPhamDTO : listctsp) {
-            System.out.println(chiTietSanPhamDTO);
-        }
+      
         this.setVisible(true);
     }
 
@@ -76,10 +58,7 @@ public class ChiTietSanPhamDialog extends JDialog implements KeyListener, ItemLi
 
         pnmain_top = new JPanel(new BorderLayout());
         pnmain_top_left = new JPanel(new GridLayout(1, 3));
-        String[] arrPb = {"Tất cả"};
-        cbxPhienBan = new SelectForm("Phiên bản", arrPb);
-        cbxPhienBan.cbb.addItemListener(this);
-        cbxPhienBan.setArr(getCauHinhPhienBan(spdto.getMasp()));
+  
 
         String[] arrTinhTrang = {"Tất cả", "Đã bán", "Tồn kho"};
         cbxTinhTrang = new SelectForm("Tình trạng", arrTinhTrang);
@@ -87,9 +66,7 @@ public class ChiTietSanPhamDialog extends JDialog implements KeyListener, ItemLi
         
         txtSoluong = new InputForm("Số lượng");
         txtSoluong.setEditable(false);
-        
-        pnmain_top_left.add(cbxPhienBan);
-        pnmain_top_left.add(cbxTinhTrang);
+                pnmain_top_left.add(cbxTinhTrang);
         pnmain_top_left.add(txtSoluong);
 
         pnmain_top_right = new JPanel(new GridLayout(1, 1));
@@ -108,7 +85,6 @@ public class ChiTietSanPhamDialog extends JDialog implements KeyListener, ItemLi
         tblModel = new DefaultTableModel();
         String[] header = new String[]{"Imei", "Mã phiếu nhập", "Mã phiếu xuất", "Tình trạng"};
         tblModel.setColumnIdentifiers(header);
-        listctsp = ctspbus.FilterPBvaAll(txtSearch.getText(), spdto.getMasp(), ch.get(cbxPhienBan.cbb.getSelectedIndex()).getMaphienbansp());
         table.setModel(tblModel);
         scrollTable.setViewportView(table);
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -128,48 +104,15 @@ public class ChiTietSanPhamDialog extends JDialog implements KeyListener, ItemLi
         this.setLocationRelativeTo(null);
     }
 
-    public void loadDataTable(ArrayList<ChiTietSanPhamDTO> result) {
-        tblModel.setRowCount(0);
-        for (ChiTietSanPhamDTO ctsp : result) {
-            tblModel.addRow(new Object[]{
-                ctsp.getImei(), ctsp.getMaphieunhap(), ctsp.getMaphieuxuat() == 0 ? "Chưa xuất kho" : ctsp.getMaphieuxuat(), ctsp.getTinhtrang() == 1 ? "Tồn kho" : "Đã bán"
-            });
-        }
-        this.txtSoluong.setText(result.size()+"");
-    }
-
-    public String[] getCauHinhPhienBan(int masp) {
-        ch = phienbanBus.getAll(masp);
-        int size = ch.size();
-        String[] arr = new String[size];
-        for (int i = 0; i < size; i++) {
-//            arr[i] = romBus.getKichThuocById(ch.get(i).getRom()) + "GB - "
-//                    + ramBus.getKichThuocById(ch.get(i).getRam()) + "GB - " + mausacBus.getTenMau(ch.get(i).getMausac());
-        }
-        return arr;
-    }
+    
+    
 
 
-
-    public void Filter() throws ParseException{
-        this.listctsp = new ArrayList<>();
-        String text = txtSearch.getText() != null ? txtSearch.getText() : "";
-        int tt = cbxTinhTrang.getSelectedIndex();
-        if (tt != 0) {
-            listctsp = ctspbus.FilterPBvaTT(text, spdto.getMasp(), ch.get(cbxPhienBan.cbb.getSelectedIndex()).getMaphienbansp(), tt - 1);
-        } else {
-            listctsp = ctspbus.FilterPBvaAll(text, spdto.getMasp(), ch.get(cbxPhienBan.cbb.getSelectedIndex()).getMaphienbansp());
-        }
-        loadDataTable(listctsp);
-    }
+ 
 
     @Override
     public void itemStateChanged(ItemEvent e) {
-        try {
-            Filter();
-        } catch (ParseException ex) {
-            Logger.getLogger(ChiTietSanPhamDialog.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
 
     }
 
@@ -185,10 +128,6 @@ public class ChiTietSanPhamDialog extends JDialog implements KeyListener, ItemLi
 
     @Override
     public void keyReleased(KeyEvent e) {
-        try {
-            Filter();
-        } catch (ParseException ex) {
-            Logger.getLogger(ChiTietSanPhamDialog.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
     }
 }

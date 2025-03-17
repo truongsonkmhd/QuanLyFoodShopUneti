@@ -93,7 +93,7 @@ public class PhieuXuatDAO implements DAOinterface<PhieuXuatDTO> {
                 int nguoitao = rs.getInt("nguoitaophieuxuat");
                 long tongtien = rs.getLong("tongtien");
                 int trangthai = rs.getInt("trangthai");
-                PhieuXuatDTO phieuxuat = new PhieuXuatDTO(makh, maphieu, nguoitao, thoigiantao, tongtien, trangthai);
+                PhieuXuatDTO phieuxuat = new PhieuXuatDTO(makh, maphieu, nguoitao, thoigiantao,ChiTietPhieuNhapDAO.getInstance().selectAll(maphieu), tongtien, trangthai);
                 result.add(phieuxuat);
             }
             JDBCUtil.closeConnection(con);
@@ -119,7 +119,7 @@ public class PhieuXuatDAO implements DAOinterface<PhieuXuatDTO> {
                 int nguoitao = rs.getInt("nguoitaophieuxuat");
                 long tongtien = rs.getLong("tongtien");
                 int trangthai = rs.getInt("trangthai");
-                result = new PhieuXuatDTO(makh, maphieu, nguoitao, thoigiantao, tongtien, trangthai);
+                result = new PhieuXuatDTO(makh, maphieu, nguoitao, thoigiantao,ChiTietPhieuNhapDAO.getInstance().selectAll(maphieu), tongtien, trangthai);
             }
             JDBCUtil.closeConnection(con);
         } catch (Exception e) {
@@ -157,7 +157,7 @@ public class PhieuXuatDAO implements DAOinterface<PhieuXuatDTO> {
                 int nguoitao = rs.getInt("nguoitaophieuxuat");
                 long tongtien = rs.getLong("tongtien");
                 int trangthai = rs.getInt("trangthai");
-                PhieuXuatDTO phieuxuat = new PhieuXuatDTO(kh, maphieu, nguoitao, thoigiantao, tongtien, trangthai);
+                PhieuXuatDTO phieuxuat = new PhieuXuatDTO(kh, maphieu, nguoitao, thoigiantao,ChiTietPhieuNhapDAO.getInstance().selectAll(maphieu), tongtien, trangthai);
                 result.add(phieuxuat);
             }
             JDBCUtil.closeConnection(con);

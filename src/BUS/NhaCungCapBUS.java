@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Tran Nhat Sinh
+ * @author truongsonkmhd
  */
 public class NhaCungCapBUS {
 

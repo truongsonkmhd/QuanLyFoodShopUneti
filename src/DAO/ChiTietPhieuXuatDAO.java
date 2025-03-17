@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 
 /**
  *
- * @author Tran Nhat Sinh
+ * @author truongsonkmhd
  */
 public class ChiTietPhieuXuatDAO implements DAOinterface<ChiTietPhieuDTO> {
 

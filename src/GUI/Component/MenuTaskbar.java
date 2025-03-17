@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import GUI.Dialog.MyAccount;
+import GUI.Panel.ThongKe;
 //import GUI.Component.itemTaskbar;
 public class MenuTaskbar extends JPanel {
 
@@ -40,7 +41,7 @@ public class MenuTaskbar extends JPanel {
     NhanVien nhanVien;
     TaiKhoan taiKhoan;
     PhanQuyen phanQuyen;
-   // ThongKeForm thongKe;
+    ThongKe thongKe;
     String[][] getSt = {
         {"Trang chủ", "home.svg", "trangchu"},
         {"Sản phẩm", "product.svg", "sanpham"},
@@ -243,8 +244,8 @@ public class MenuTaskbar extends JPanel {
         listitem[9].addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent evt) {
-              //  thongKe = new ThongKeForm();
-              //  main.setPanel(thongKe);
+                thongKe = new ThongKe();
+                main.setPanel(thongKe);
             }
         });
 

@@ -18,7 +18,6 @@ import javax.swing.border.EmptyBorder;
 import GUI.Component.PanelBorderRadius;
 import GUI.Component.SelectForm;
 import GUI.Component.TableSorter;
-import GUI.Dialog.ChiTietPhieuDialog;
 import helper.Formater;
 import helper.JTableExporter;
 import java.awt.event.ActionEvent;
@@ -48,7 +47,6 @@ public final class PhieuXuat extends JPanel implements ActionListener, KeyListen
     JPanel pnlBorder1, pnlBorder2, pnlBorder3, pnlBorder4, contentCenter;
     JTable tablePhieuXuat;
     JScrollPane scrollTablePhieuXuat;
-    MainFunction mainFunction;
     IntegratedSearch search;
     DefaultTableModel tblModel;
     SelectForm cbxKhachHang, cbxNhanVien;
@@ -56,7 +54,6 @@ public final class PhieuXuat extends JPanel implements ActionListener, KeyListen
     InputForm moneyMin, moneyMax;
 
     Main m;
-    TaoPhieuXuat taoPhieuXuat;
     TaiKhoanDTO tk;
 
     Color BackgroundColor = new Color(240, 247, 250);
@@ -92,16 +89,7 @@ public final class PhieuXuat extends JPanel implements ActionListener, KeyListen
         functionBar = new PanelBorderRadius();
         functionBar.setPreferredSize(new Dimension(0, 100));
         functionBar.setLayout(new GridLayout(1, 2, 50, 0));
-        functionBar.setBorder(new EmptyBorder(10, 10, 10, 10));
-
-        String[] action = {"create", "detail", "cancel", "export"};
-        mainFunction = new MainFunction(m.user.getManhomquyen(), "xuathang", action);
-        functionBar.add(mainFunction);
-
-        //Add Event MouseListener
-        for (String ac : action) {
-            mainFunction.btn.get(ac).addActionListener(this);
-        }
+        functionBar.setBorder(new EmptyBorder(10, 10, 10, 10));     
 
         search = new IntegratedSearch(new String[]{"Tất cả", "Mã phiếu", "Khách hàng", "Nhân viên xuất"});
         search.cbxChoose.addItemListener(this);
@@ -207,37 +195,41 @@ public final class PhieuXuat extends JPanel implements ActionListener, KeyListen
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
-        if (source == mainFunction.btn.get("create")) {
-            taoPhieuXuat = new TaoPhieuXuat(m, tk, "create");
-            m.setPanel(taoPhieuXuat);
-        } else if (source == mainFunction.btn.get("detail")) {
-            if (getRow() < 0) {
-                JOptionPane.showMessageDialog(null, "Vui lòng chọn phiếu cần xem!");
-            } else {
-                ChiTietPhieuDialog ctp = new ChiTietPhieuDialog(m, "Thông tin phiếu xuất", true, pxBUS.getSelect(getRow()));
-            }
-        } else if (source == mainFunction.btn.get("cancel")) {
-            if (tablePhieuXuat.getSelectedRow() < 0) {
-                JOptionPane.showMessageDialog(null, "Vui lòng chọn phiếu!");
-            } else {
-                int n = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa phiếu này?", "Xóa phiếu", JOptionPane.YES_NO_OPTION);
-                if (n == JOptionPane.YES_OPTION) {
-                    PhieuXuatDTO px = pxBUS.getSelect(tablePhieuXuat.getSelectedRow());
-                    pxBUS.cancel(px.getMaphieu());
-                    pxBUS.remove(tablePhieuXuat.getSelectedRow());
-                    loadDataTalbe(pxBUS.getAll());
-                    Notification notification = new Notification(m, Notification.Type.SUCCESS, Notification.Location.TOP_CENTER, "Hủy phiếu thành công");
-                    notification.showNotification();
-                }
-            }
-        } else if (source == search.btnReset) {
+//        if (source == mainFunction.btn.get("create")) {
+//            taoPhieuXuat = new TaoPhieuXuat(m, tk, "create");
+//            m.setPanel(taoPhieuXuat);
+//        } else if (source == mainFunction.btn.get("detail")) {
+//            if (getRow() < 0) {
+//                JOptionPane.showMessageDialog(null, "Vui lòng chọn phiếu cần xem!");
+//            } else {
+//                ChiTietPhieuDialog ctp = new ChiTietPhieuDialog(m, "Thông tin phiếu xuất", true, pxBUS.getSelect(getRow()));
+//            }
+//        } else if (source == mainFunction.btn.get("cancel")) {
+//            if (tablePhieuXuat.getSelectedRow() < 0) {
+//                JOptionPane.showMessageDialog(null, "Vui lòng chọn phiếu!");
+//            } else {
+//                int n = JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xóa phiếu này?", "Xóa phiếu", JOptionPane.YES_NO_OPTION);
+//                if (n == JOptionPane.YES_OPTION) {
+//                    PhieuXuatDTO px = pxBUS.getSelect(tablePhieuXuat.getSelectedRow());
+//                 //   pxBUS.cancel(px.getMaphieu());
+//                    pxBUS.remove(tablePhieuXuat.getSelectedRow());
+//                    loadDataTalbe(pxBUS.getAll());
+//                    Notification notification = new Notification(m, Notification.Type.SUCCESS, Notification.Location.TOP_CENTER, "Hủy phiếu thành công");
+//                    notification.showNotification();
+//                }
+//            }
+//        } else if (source == search.btnReset) {
+//            resetForm();
+//        } else if (source == mainFunction.btn.get("export")) {
+//            try {
+//                JTableExporter.exportJTableToExcel(tablePhieuXuat);
+//            } catch (IOException ex) {
+//                Logger.getLogger(PhieuXuat.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+        
+         if (source == search.btnReset) {
             resetForm();
-        } else if (source == mainFunction.btn.get("export")) {
-            try {
-                JTableExporter.exportJTableToExcel(tablePhieuXuat);
-            } catch (IOException ex) {
-                Logger.getLogger(PhieuXuat.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
     }
 
