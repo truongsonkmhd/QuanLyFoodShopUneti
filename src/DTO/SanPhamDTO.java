@@ -19,6 +19,15 @@ public class SanPhamDTO {
 
     public SanPhamDTO() {
     }
+    
+    public SanPhamDTO(int masp, String tensp, int soluongton, String thuonghieu, String xuatxu, int khuvuckho) {
+        this.masp = masp;
+        this.tensp = tensp;
+        this.xuatxu = xuatxu;
+        this.thuonghieu = thuonghieu;
+        this.khuvuckho = khuvuckho;
+        this.soluongton = soluongton;
+    }
 
     public SanPhamDTO(int masp, String tensp, String hinhanh, String xuatxu, String thuonghieu, int khuvuckho, int soluongton) {
         this.masp = masp;

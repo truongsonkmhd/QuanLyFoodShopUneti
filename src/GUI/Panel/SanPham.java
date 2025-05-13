@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import GUI.Component.PanelBorderRadius;
 import GUI.Component.TableSorter;
 import GUI.Dialog.ChiTietSanPhamDialog;
+import GUI.Dialog.SanPhamDialog;
 import helper.JTableExporter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,6 +26,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
 public final class SanPham extends JPanel implements ActionListener {
+
     PanelBorderRadius main, functionBar;
     JPanel pnlBorder1, pnlBorder2, pnlBorder3, pnlBorder4, contentCenter;
     JFrame owner = (JFrame) SwingUtilities.getWindowAncestor(this);
@@ -35,7 +37,7 @@ public final class SanPham extends JPanel implements ActionListener {
     DefaultTableModel tblModel;
     Main m;
     public SanPhamBUS spBUS = new SanPhamBUS();
-    
+
     public ArrayList<DTO.SanPhamDTO> listSP = spBUS.getAll();
 
     Color BackgroundColor = new Color(240, 247, 250);
@@ -47,7 +49,7 @@ public final class SanPham extends JPanel implements ActionListener {
         tableSanPham = new JTable();
         scrollTableSanPham = new JScrollPane();
         tblModel = new DefaultTableModel();
-        String[] header = new String[]{"Mã SP", "Tên sản phẩm", "Số lượng tồn","Thương hiệu","Xuất xứ", "Khu vực kho"};
+        String[] header = new String[]{"Mã SP", "Tên sản phẩm", "Số lượng tồn", "Thương hiệu", "Xuất xứ", "Khu vực kho"};
         tblModel.setColumnIdentifiers(header);
         tableSanPham.setModel(tblModel);
         scrollTableSanPham.setViewportView(tableSanPham);
@@ -124,12 +126,12 @@ public final class SanPham extends JPanel implements ActionListener {
         for (DTO.SanPhamDTO sp : result) {
             tblModel.addRow(new Object[]{
                 sp.getMasp(),
-                sp.getTensp(), 
+                sp.getTensp(),
                 sp.getXuatxu(),
                 sp.getThuonghieu(),
                 sp.getKhuvuckho(),
-                sp.getSoluongton(),             
-                KhuVucKhoDAO.getInstance().selectById(sp.getKhuvuckho()+"").getTenkhuvuc()
+                sp.getSoluongton(),
+                KhuVucKhoDAO.getInstance().selectById(sp.getKhuvuckho() + "").getTenkhuvuc()
             });
         }
     }
@@ -137,11 +139,11 @@ public final class SanPham extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == mainFunction.btn.get("create")) {
-           // SanPhamDialog spDialog = new SanPhamDialog(this, owner, "Thêm sản phẩm mới", true, "create");
+            SanPhamDialog spDialog = new SanPhamDialog(this, owner, "Thêm sản phẩm mới", true, "create");
         } else if (e.getSource() == mainFunction.btn.get("update")) {
             int index = getRowSelected();
             if (index != -1) {
-                //SanPhamDialog spDialog = new SanPhamDialog(this, owner, "Chỉnh sửa sản phẩm", true, "update", listSP.get(index));
+                SanPhamDialog spDialog = new SanPhamDialog(this, owner, "Chỉnh sửa sản phẩm", true, "update", listSP.get(index));
             }
         } else if (e.getSource() == mainFunction.btn.get("delete")) {
             int index = getRowSelected();
@@ -155,7 +157,7 @@ public final class SanPham extends JPanel implements ActionListener {
         } else if (e.getSource() == mainFunction.btn.get("detail")) {
             int index = getRowSelected();
             if (index != -1) {
-               // SanPhamDialog spDialog = new SanPhamDialog(this, owner, "Xem chi tiết sản phẩm", true, "view", listSP.get(index));
+                 SanPhamDialog spDialog = new SanPhamDialog(this, owner, "Xem chi tiết sản phẩm", true, "view", listSP.get(index));
             }
         } else if (e.getSource() == mainFunction.btn.get("phone")) {
             int index = getRowSelected();
@@ -168,7 +170,7 @@ public final class SanPham extends JPanel implements ActionListener {
             } catch (IOException ex) {
                 Logger.getLogger(SanPham.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else if(e.getSource() == mainFunction.btn.get("import")) {
+        } else if (e.getSource() == mainFunction.btn.get("import")) {
             JOptionPane.showMessageDialog(null, "Chức năng không khả dụng");
         }
     }
